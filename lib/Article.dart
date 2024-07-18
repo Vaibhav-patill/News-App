@@ -33,9 +33,11 @@ class NewsService {
   static const _apiKey = '874d1aad5e19457c95e0893daae15b5d';
   static const _baseUrl = 'https://newsapi.org/v2';
 
-  Future<List<Article>> fetchTopHeadlines({String country = 'us'}) async {
+  Future<List<Article>> fetchTopHeadlines(
+      {String category = 'general', String country = 'in'}) async {
     final response = await http.get(
-      Uri.parse('$_baseUrl/top-headlines?country=$country&apiKey=$_apiKey'),
+      Uri.parse(
+          '$_baseUrl/top-headlines?country=$country&category=$category&apiKey=$_apiKey'),
     );
 
     if (response.statusCode == 200) {
