@@ -27,6 +27,7 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   late Future<List<Article>> futureArticles;
   String category = 'general';
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -38,6 +39,24 @@ class _NewsScreenState extends State<NewsScreen> {
     setState(() {
       category = newCategory;
       futureArticles = NewsService().fetchTopHeadlines(category: category);
+    });
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      // Update category based on selected index
+      switch (index) {
+        case 0:
+          updateCategory('general');
+          break;
+        case 1:
+          updateCategory('business');
+          break;
+        case 2:
+          updateCategory('sports');
+          break;
+      }
     });
   }
 
@@ -97,6 +116,25 @@ class _NewsScreenState extends State<NewsScreen> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'General',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports),
+            label: 'Sports',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }

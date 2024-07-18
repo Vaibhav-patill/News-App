@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'Article.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArticleDetail extends StatelessWidget {
   final Article article;
@@ -21,7 +22,11 @@ class ArticleDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (article.urlToImage != '') Image.network(article.urlToImage),
+              if (article.urlToImage != null && article.urlToImage!.isNotEmpty)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(article.urlToImage!),
+                ),
               SizedBox(height: 10),
               Text(
                 article.title,
@@ -36,6 +41,14 @@ class ArticleDetail extends StatelessWidget {
               Text(
                 article.description,
                 style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Open the article URL in a web browser
+                  launch(article.url);
+                },
+                child: Text('Read Full Article'),
               ),
             ],
           ),
