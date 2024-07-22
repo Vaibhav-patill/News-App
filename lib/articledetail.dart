@@ -22,10 +22,10 @@ class ArticleDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (article.urlToImage != null && article.urlToImage!.isNotEmpty)
+              if (article.urlToImage != null && article.urlToImage.isNotEmpty)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(article.urlToImage!),
+                  child: Image.network(article.urlToImage),
                 ),
               SizedBox(height: 10),
               Text(
